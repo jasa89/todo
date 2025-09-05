@@ -5,3 +5,4 @@ import { UserContext } from "./UserContext";
 export const useUser = () => {
  return useContext(UserContext)
 }
+export default useUser

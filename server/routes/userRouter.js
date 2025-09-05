@@ -48,6 +48,7 @@ router.post('/signin', (req, res, next) => {
  return next(error)
  }
  const dbUser = result.rows[0]
+
  compare(user.password, dbUser.password, (err, isMatch) => {
  if (err) return next(err)
 
@@ -57,6 +58,7 @@ router.post('/signin', (req, res, next) => {
  return next(error)
  }
  })
+
  const token = sign({ user: dbUser.email }, process.env.JWT_SECRET)
  res.status(200).json({
  id: dbUser.id,

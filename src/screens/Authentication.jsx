@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom"
-import {useUser} from "../context/useUser"
+
+import { useUser } from "../context/useUser"
 
 
-
-export const AuthenticationMode = object.freeze({
+export const AuthenticationMode = Object.freeze({
  SignIn: 'Login',
  SignUp: 'SignUp'
 })

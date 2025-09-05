@@ -1,9 +1,12 @@
 
 
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
 import App from './screens/App'
 import Authentication, { AuthenticationMode } from './screens/Authentication'
 import ProtectedRoute from './components/ProtectedRoute'
-import UserProvider from './context/UserProvider'
+import UserProvider from './context/userProvider'
 import { RouterProvider } from 'react-router-dom'
 import { createBrowserRouter } from "react-router-dom";
 import NotFound from "./screens/NotFound";
