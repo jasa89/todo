@@ -2,7 +2,7 @@
 import {pool} from '../helper/db.js'
 import { auth } from '../helper/auth.js'
 import { Router } from 'express'
-
+import { ApiError } from '../helper/ApiError.js'
 
 
 
@@ -26,12 +26,12 @@ router.post('/create', auth,(req, res,next) => {
  const { task } = req.body
 
  if (!task) {
- return res.status(400).json({error: 'Task is required'})
+ return next(new ApiError('Task is required', 400))
  }
  pool.query('insert into task (description) values ($1) returning *', [task.description],
  (err, result) => {
  if (err) {
- return next(err)
+ return next(new ApiError('Database error', 500))
  }
  res.status(201).json({id: result.rows[0].id, description: task.description})
  })
@@ -39,21 +39,21 @@ router.post('/create', auth,(req, res,next) => {
 
 
 // delete data from database
-router.delete('/delete/:id',auth, (req, res,next) => {
+router.delete('/delete/:id', auth, (req, res,next) => {
  const { id } = req.params
  pool.query('delete from task WHERE id = $1',
  [id],
  (err, result) => {
  if (err) {
- return next(err)
+  return next(new ApiError('Database error', 500))
  }
  if (result.rowCount === 0) {
- const error = new Error('Task not found')
- error.status = 404
- return next(error)
+
+ return next(new ApiError('Task not found', 404))
  }
  return res.status(200).json({id:id})
  })
+
 })
 
 export default router
